@@ -1,16 +1,20 @@
 package webpages;
 
+import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.*;
+import personalinfo.*;
 
-import java.time.Duration;
 
 
 public class PersonalPage extends BasePage {
 
-  WebDriver driver;
+
   public WebDriverWait webDriverWait;
+  public PersonalPage(WebDriver driver) {
+    super(driver);
+  }
 
   @FindBy(xpath = "//*[contains(@name,'fname_latin')]")
   private WebElement fName;
@@ -27,9 +31,6 @@ public class PersonalPage extends BasePage {
   @FindBy(xpath = "//p[contains(text(),'Уровень английского *')]")
   private WebElement clickOnLevelEngl;
 
-  public PersonalPage(WebDriver driver) {
-    super(driver);
-  }
 
   public void setfName() {
     fName.sendKeys(serverConfiguration.fname());
@@ -213,9 +214,93 @@ public class PersonalPage extends BasePage {
 
   public void clickSaveAndContinue()  {
     saveAndContinue.click();
+
   }
+  public void assertItAll() {
 
+    WebElement actualFirstName = driver.findElement(By.xpath("//*[contains(@class,'container__col container__col_6')]//input[contains(@value,'John')]"));
+    String expectedName = FirstName.JOHN.getFirstName();
+    Assert.assertEquals("First Name of user doesn't correct", expectedName, actualFirstName.getAttribute("value"));
 
+    WebElement actualLastName = driver.findElement(By.xpath("//*[contains(@class,'container__col container__col_6')]//input[contains(@value,'Smith')]"));
+    String expectedLastName = LastName.SMITH.getLastName();
+    Assert.assertEquals("Last Name of user doesn't correct", expectedLastName, actualLastName.getAttribute("value"));
+
+    WebElement actualBloggerName = driver.findElement(By.xpath("//*[contains(@id,'id_blog_name')]"));
+    String expectedBloggerName = BloggerName.AMERICANO.getBloggerName();
+    Assert.assertEquals("Blogger Name is not correct", expectedBloggerName, actualBloggerName.getAttribute("value"));
+
+    WebElement actualDateOfBirth = driver.findElement(By.xpath("//*[contains(@value,'01.01.2001')]"));
+    String expectedDateOfBirth = DateOfBirthday.DATEONE.getDateOfBirthday();
+    Assert.assertEquals("Date of Birth is not doesn't correct", expectedDateOfBirth, actualDateOfBirth.getAttribute("value"));
+
+    WebElement scrollElement3 = driver.findElement(By.xpath("//p[contains(text(),'Контактная информация')]"));
+    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", scrollElement3);
+
+    WebElement countryActual1 = driver.findElement(By.xpath("//*[contains(@class, 'lk-cv-block__select-scroll_country')]//button[contains(@title,'Россия')]"));
+    String countryExpected1 = Country.RUSSIA.getCountry();
+    Assert.assertEquals("Country is wrong", countryExpected1, countryActual1.getAttribute("title"));
+
+    WebElement cityActual1 = driver.findElement(By.xpath("//*[contains(@class,'lk-cv-block__select-option')][contains(@title,'Москва')]"));
+    String cityExpected1 = City.MOSCOW.getCity();
+    Assert.assertEquals("City is wrong", cityExpected1, cityActual1.getAttribute("title"));
+
+    WebElement englishActual1 = driver.findElement(By.xpath("//button[contains(@title,'Начальный уровень (Beginner)')]"));
+    String englishExpected1 = Englishlevel.BEGINNER.getEnglishLevel();
+    Assert.assertEquals("English level is wrong", englishExpected1, englishActual1.getAttribute("title"));
+
+    WebElement checkYeas1 = driver.findElement(By.xpath("//span[contains(text(),'Да')]"));
+    Assert.assertTrue(checkYeas1.isDisplayed());
+
+    WebElement checkRemote1 = driver.findElement(By.xpath("//span[contains(text(),'Удаленно')]"));
+    Assert.assertTrue(checkRemote1.isDisplayed());
+
+    WebElement checkFieldEmail = driver.findElement(By.xpath("//input[@id='id_email']"));
+    Assert.assertTrue(checkFieldEmail.isDisplayed());
+
+    WebElement clearFieldPhone = driver.findElement(By.xpath("//input[@id='id_phone']"));
+    Assert.assertTrue(clearFieldPhone.isDisplayed());
+
+    WebElement scrollElement4 = driver.findElement(By.xpath("//p[contains(text(),'Телефон *')]"));
+    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", scrollElement4);
+
+    WebElement okActual1 = driver.findElement(By.xpath("//*[contains(@class,'lk-cv-block__select-scroll')]//button[@title='OK']"));
+    String okExcepted1 = Communication.OK.getCommunication();
+    Assert.assertEquals("Communication 2 is wrong", okExcepted1, okActual1.getAttribute("title"));
+
+    WebElement americanoActual = driver.findElement(By.xpath("//input[@id='id_contact-0-value']"));
+    String americanoExpected = BloggerName.AMERICANO.getBloggerName();
+    Assert.assertEquals("Name is wrong or not Americano", americanoExpected, americanoActual.getAttribute("value"));
+
+    WebElement vkActual1 = driver.findElement(By.xpath("//*[contains(@class,'lk-cv-block__select-scroll')]//button[@title='VK']"));
+    String vkExpected1 = Communication.VK.getCommunication();
+    Assert.assertEquals("Communication is wrong", vkExpected1, vkActual1.getAttribute("title"));
+
+    WebElement JohnActual = driver.findElement(By.xpath("//input[@id='id_contact-1-value']"));
+    String JohnExpected = FirstName.JOHN.getFirstName();
+    Assert.assertEquals("First name is wrong", JohnExpected, JohnActual.getAttribute("value"));
+
+    WebElement scrollElement2 = driver.findElement(By.xpath("//h3[contains(text(),'Другое')]"));
+    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", scrollElement2);
+
+    WebElement genderActual1 = driver.findElement(By.xpath("//select[@id='id_gender']//option[contains(@value,'m')]"));
+    String genderExpected1 = Gender.MALE.getGender();
+    Assert.assertEquals("Gender is wrong", genderExpected1, genderActual1.getAttribute("value"));
+
+    WebElement companyActual = driver.findElement(By.xpath("//input[@id='id_company']"));
+    String companyExpected = Company.EMI.getCompany();
+    Assert.assertEquals("Company is wrong", companyExpected, companyActual.getAttribute("value"));
+
+    WebElement positionActual = driver.findElement(By.xpath("//input[@id='id_work']"));
+    String positionExpected = Position.POSITIONONE.getPosition();
+    Assert.assertEquals("Position is wrong", positionExpected, positionActual.getAttribute("value"));
+
+    WebElement checkAdding1 = driver.findElement(By.xpath("//select[@id='id_experience-0-experience']"));
+    Assert.assertTrue(checkAdding1.isDisplayed());
+
+    WebElement checkAdding2 = driver.findElement(By.xpath("//select[@id='id_experience-0-level']"));
+    Assert.assertTrue(checkAdding2.isDisplayed());
+  }
 
  }
 

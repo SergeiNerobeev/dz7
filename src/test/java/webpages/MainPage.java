@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class MainPage extends BasePage{
 
+  public WebDriverWait wait;
   public MainPage(WebDriver driver) {
     super(driver);
   }
@@ -23,6 +24,13 @@ public class MainPage extends BasePage{
     webDriverWait = new WebDriverWait(driver, 3);
     webDriverWait.until(ExpectedConditions.elementToBeClickable(textUserName)).click();
     dropDownTextName.click();
+  }
+  public PersonalPage clickTextUserName2() {
+//    WebDriverWait webDriverWait;
+    webDriverWait = new WebDriverWait(driver, 3);
+    webDriverWait.until(ExpectedConditions.elementToBeClickable(textUserName)).click();
+    dropDownTextName.click();
+    return new PersonalPage(driver);
   }
 
   public PersonalPage clickDropDownTextName() {

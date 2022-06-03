@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 import org.junit.*;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 
 import java.time.Duration;
@@ -23,11 +23,8 @@ public class MainTest {
   public void setup(){
     final IServerConfiguration serverConfiguration = ConfigFactory.create(IServerConfiguration.class);
     final Logger logger = (Logger) LogManager.getLogger(MainTest.class);
-//    driver = WebDriverFactory.getWebDriver(Browsers.CHROME);
-//    WebDriverManager.firefoxdriver().setup();
-//    driver = new FirefoxDriver();
-    WebDriverManager.chromedriver().setup();
-    driver = new ChromeDriver();
+    WebDriverManager.firefoxdriver().setup();
+    driver = new FirefoxDriver();
     driver.manage().window().maximize();
     driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
     loginPage = new LoginPage(driver);
@@ -43,46 +40,52 @@ public class MainTest {
     }
 
     @Test
-    public void loginTest (){
+    public void loginTest()  {
 
-    loginPage.openOtusUrl();
-    loginPage.clickNewLoginBtn();
-    loginPage.inputLogin();
-    loginPage.inputPassword();
-    loginPage.clickEnterBtn();
+      loginPage.openOtusUrl();
+      loginPage.clickNewLoginBtn();
+      loginPage.inputLogin();
+      loginPage.inputPassword();
+      loginPage.clickEnterBtn();
 
-    mainPage.clickTextUserName();
+      mainPage.clickTextUserName();
 
-    personalPage.setfName();
-    personalPage.setlName();
-    personalPage.setBloggerName();
-    personalPage.setDateOfBirthday();
+      personalPage.setfName();
+      personalPage.setlName();
+      personalPage.setBloggerName();
+      personalPage.setDateOfBirthday();
 
-    personalPage.clickCountryField();
-    personalPage.setRussia();
-    personalPage.clickCityField();
+      personalPage.clickCountryField();
+      personalPage.setRussia();
+      personalPage.clickCityField();
 
-    personalPage.setMoscow();
-    personalPage.clickEnglishLevel();
-    personalPage.setBegginer();
-    personalPage.setYes();
-    personalPage.setRemote();
+      personalPage.setMoscow();
+      personalPage.clickEnglishLevel();
+      personalPage.setBegginer();
+      personalPage.setYes();
+      personalPage.setRemote();
 
-    personalPage.setPhoneNumber();
-    personalPage.setContact01();
-    personalPage.setContact02();
-    personalPage.setGender();
-    personalPage.setCompany();
-    personalPage.setPosition();
-    personalPage.setDevExp();
-    personalPage.clickSaveAndContinue();
-    driver.quit();
+      personalPage.setPhoneNumber();
+      personalPage.setContact01();
+      personalPage.setContact02();
+      personalPage.setGender();
+      personalPage.setCompany();
+      personalPage.setPosition();
+      personalPage.setDevExp();
+      personalPage.clickSaveAndContinue();
+//      driver.manage().deleteAllCookies();
+    }
+    @Test
+    public void checkLoginTest() {
 
-    loginPage.openAndChecking();
-    loginPage.clickNewLoginBtn();
-    loginPage.inputLogin();
-    loginPage.inputPassword();
-    loginPage.clickEnterBtn();
+      loginPage.openOtusUrl();
+      loginPage.clickNewLoginBtn();
+      loginPage.inputLogin();
+      loginPage.inputPassword();
+      loginPage.clickEnterBtn();
+      mainPage.clickTextUserName2();
+
+      personalPage.assertItAll();
     }
 }
 
